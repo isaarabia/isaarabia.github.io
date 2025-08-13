@@ -1,0 +1,444 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Isa Arabia | Photography</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link href="css/projects.css" rel="stylesheet">
+  <link href="css/styles.css" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    /*.imageContainer {*/
+    /*  background-image: url("../img/photo/Nature/40.png");*/
+    /*}*/
+
+    .projectIntroducer > h1 {
+      font-size: 14vw;
+    }
+
+    .artSelectContainer {
+      display: flex;
+      justify-content: center;
+    }
+
+    .artSelectField {
+      width: 300px;
+      outline: 0px;
+      border: 0px;
+      height: 55px;
+      border-radius: 45px;
+      padding-left: 20px;
+      margin-top: 150px;
+      font-family: Montserrat;
+      color: #fff;
+      box-shadow: 0 0 85px rgb(90 86 130 / 5%);
+      padding-right: 10px;
+      border-right: 16px solid transparent;
+      transition: 0.2s;
+      font-weight: 500;
+      background: rgba(255, 255, 255, 0.08);
+    }
+
+    .artSelectField:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    #sketchAndButtonsContainer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    #sketchContainer2 {
+      margin-top: 30px;
+    }
+
+    #popupOverlay {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      justify-content: center;
+      align-items: center;
+    }
+
+    .popup {
+      position: relative;
+    }
+
+    .close-button {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      cursor: pointer;
+      color: white;
+      font-size: 24px;
+    }
+
+    #paginationButtons {
+      display: flex;
+      justify-content: center;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .page-button {
+      margin: 0 5px;
+      padding: 10px 20px;
+      background: transparent;
+      color: #fff;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+      font-family: Montserrat, sans-serif;
+      transition: 0.2s;
+      background: rgba(255, 255, 255, 0.08);
+      margin-bottom: 40px;
+    }
+
+    .page-button:hover {
+      background: rgba(255, 255, 255, 0.2);
+    }
+
+    .page-button > i {
+      transition: 0.2s;
+      font-size: 11pt;
+    }
+
+    #next:hover > i {
+      transform: translateX(2px);
+    }
+
+    #prev:hover > i {
+      transform: translateX(-2px);
+    }
+
+    #next > i {
+      padding-left: 13px;
+    }
+
+    #prev > i {
+      padding-right: 13px;
+    }
+
+    .button-disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      pointer-events: none;
+    }
+
+  </style>
+
+</head>
+
+<body id="projectsBody">
+
+<div id="fakeContainer">
+  <nav>
+    <ul class="nav-bar">
+      <li><a href="cv.html" class="unselected">cv</a></li>
+      <li><a href="#about" class="unselected">science</a></li>
+      <li><a href="projects.html">art</a></li>
+      <li><a href="https://www.linkedin.com/in/isabellaarabia/" target="_blank" class="unselected">contact</a></li>
+      <li><a href="index.html" id="specialText">ISA</a></li>
+    </ul>
+  </nav>
+</div>
+
+<div class="projectIntroducer">
+  <div class="imageContainer" style="background-image: url('img/photo/Nature/113.png')"></div>
+  <h1>PHOTO</h1>
+</div>
+
+<div class="artSelectContainer">
+  <select class="artSelectField" onChange="filterGrid()">
+    <option value="Nature" selected>Nature</option>
+    <option value="Portrait">Portrait</option>
+    <option value="Science">Science</option>
+    <option value="Urban">Urban</option>
+  </select>
+</div>
+
+<!-- This container holds both the canvas and pagination buttons -->
+<div id="sketchAndButtonsContainer">
+  <div id="sketchContainer2"></div>
+  <div id="paginationButtons">
+    <button class="page-button" id="prev" onclick="prevPage()"><i class="fa-solid fa-chevron-left"></i>Previous</button>
+    <button class="page-button" id="next" onclick="nextPage()">Next<i class="fa-solid fa-chevron-right"></i></button>
+  </div>
+</div>
+
+<div id="popupOverlay">
+  <div class="popup">
+    <i class="fas fa-times close-button" onclick="closePopup(event)"></i>
+    <img id="popupImage" src="">
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/p5@1.11.0/lib/p5.min.js"></script>
+
+<script>
+  let p5Instance;
+
+  function startSketch() {
+    const s = (p) => {
+      let images = [];
+      let columns = [[], [], []];
+      let columnHeights = [0, 0, 0];
+      const margin = 25;
+      let imgWidth;
+      let popupOpen = false;
+      let containerWidth;
+      const pageSize = 35;
+      let currentPage = 1;
+      let totalImages = 0; // Initialize with 0 and later update dynamically
+      let totalPages = 0;
+      const selectedCategory = document.querySelector('.artSelectField').value || 'Nature';
+
+      p.setup = function() {
+        containerWidth = document.getElementById('sketchContainer2').offsetWidth;
+        const availableWidth = containerWidth - 2 * margin;
+        imgWidth = availableWidth / 3;
+        p.createCanvas(containerWidth, window.innerHeight).parent('sketchContainer2');
+        calculateTotalImages(selectedCategory);
+      };
+
+      function calculateTotalImages(category) {
+        // Adjust this logic based on your specific setup
+        // Here, we assume images are named sequentially without gaps
+        let index = 1;
+        let consecutiveFailures = 0;
+        const maxFailures = 5; // Allow some leeway for missing images
+
+        function tryNextImage() {
+          if (consecutiveFailures >= maxFailures) {
+            finalizeImageCount(index - consecutiveFailures - 1);
+            return;
+          }
+
+          const imagePath = `img/photo/${category}/${index}.png`;
+          p.loadImage(
+                  imagePath,
+                  () => {
+                    index++;
+                    consecutiveFailures = 0;
+                    tryNextImage();
+                  },
+                  () => {
+                    consecutiveFailures++;
+                    tryNextImage();
+                  }
+          );
+        }
+
+        tryNextImage();
+      }
+
+      function finalizeImageCount(count) {
+        totalImages = count;
+        totalPages = Math.ceil(totalImages / pageSize);
+        loadImagesForCategory(selectedCategory, currentPage);
+        updateButtonStates();
+      }
+
+      function loadImagesForCategory(category, page) {
+        images = [];
+        columns = [[], [], []];
+        columnHeights = [0, 0, 0];
+        const imageIndexStart = (page - 1) * pageSize + 1;
+        loadBatchImages(category, imageIndexStart);
+      }
+
+      function loadBatchImages(category, startIndex) {
+        let loadedImageCount = 0;
+        let consecutiveFailures = 0;
+        const failureThreshold = 5;
+
+        function loadNextImage() {
+          if (loadedImageCount >= pageSize || consecutiveFailures >= failureThreshold) {
+            adjustCanvasHeight();
+            return;
+          }
+
+          const imagePath = `img/photo/${category}/${startIndex + loadedImageCount}.png`;
+          p.loadImage(
+                  imagePath,
+                  (img) => {
+                    img.resize(imgWidth, 0);
+                    const imageObj = { img, path: imagePath };
+                    images.push(imageObj);
+
+                    const shortestColumn = columnHeights.indexOf(Math.min(...columnHeights));
+                    columns[shortestColumn].push(imageObj);
+                    columnHeights[shortestColumn] += img.height + margin;
+
+                    consecutiveFailures = 0;
+                    loadedImageCount++;
+                    loadNextImage();
+                  },
+                  () => {
+                    consecutiveFailures++;
+                    if (consecutiveFailures < failureThreshold) {
+                      loadedImageCount++;
+                      loadNextImage();
+                    } else {
+                      adjustCanvasHeight();
+                    }
+                  }
+          );
+        }
+
+        loadNextImage();
+      }
+
+      function adjustCanvasHeight() {
+        const totalHeight = Math.max(...columnHeights) + margin;
+        p.resizeCanvas(containerWidth, totalHeight);
+      }
+
+      p.draw = function() {
+        p.background('#090E1E');
+        if (images.length === 0) return;
+
+        let xOffset = margin / 2;
+        let cursorSet = false;
+
+        for (let columnIndex = 0; columnIndex < columns.length; columnIndex++) {
+          let yOffset = margin / 2;
+          for (const { img, path } of columns[columnIndex]) {
+            if (!path) continue;
+            if (
+                    !cursorSet &&
+                    p.mouseX > xOffset &&
+                    p.mouseX < xOffset + img.width &&
+                    p.mouseY > yOffset &&
+                    p.mouseY < yOffset + img.height
+            ) {
+              p.cursor(p.HAND);
+              p.tint(255, 229);
+              cursorSet = true;
+              if (p.mouseIsPressed && !popupOpen) openPopup(path);
+            } else {
+              p.noTint();
+            }
+            p.image(img, xOffset, yOffset);
+            yOffset += img.height + margin;
+          }
+          xOffset += imgWidth + margin;
+        }
+        if (!cursorSet) p.cursor(p.ARROW);
+      };
+
+      function openPopup(imgPath) {
+        if (!popupOpen && typeof imgPath === 'string') {
+          popupOpen = true;
+          try {
+            const maxImgPath = imgPath.replace(/(\d+)\.png$/, '$1_max.png');
+            const popupImageElement = document.getElementById('popupImage');
+            popupImageElement.src = "";
+            const popupOverlayElement = document.getElementById('popupOverlay');
+            popupOverlayElement.style.display = 'flex';
+
+            const tempImg = new Image();
+            tempImg.onload = function() {
+              popupImageElement.src = maxImgPath;
+            };
+            tempImg.onerror = function() {
+              console.error('Failed to load max image:', maxImgPath);
+              popupImageElement.src = imgPath;
+            };
+            tempImg.src = maxImgPath;
+          } catch (error) {
+            console.error('Error occurred in openPopup:', error);
+          }
+        }
+      }
+
+      function closePopup() {
+        popupOpen = false;
+        document.getElementById('popupOverlay').style.display = 'none';
+      }
+
+      // Assign closePopup to global scope
+      window.closePopup = closePopup;
+
+      p.mousePressed = function() {
+        // Use p.closePopup() in other interactions if needed
+      };
+
+      function nextPage() {
+        if (currentPage < totalPages) {
+          currentPage++;
+          loadImagesForCategory(selectedCategory, currentPage);
+          scrollToContainer();
+          updateButtonStates();
+        }
+      }
+
+      function prevPage() {
+        if (currentPage > 1) {
+          currentPage--;
+          loadImagesForCategory(selectedCategory, currentPage);
+          scrollToContainer();
+          updateButtonStates();
+        }
+      }
+
+      // Expose nextPage and prevPage functions to the global window object
+      window.nextPage = nextPage;
+      window.prevPage = prevPage;
+
+      function scrollToContainer() {
+        const element = document.querySelector('.artSelectContainer');
+        element.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      }
+
+      function updateButtonStates() {
+        const prevButton = document.getElementById('prev');
+        const nextButton = document.getElementById('next');
+        const paginationButtons = document.getElementById('paginationButtons');
+
+        // Hide pagination buttons if totalImages is less than 35
+        if (totalImages < 35) {
+          paginationButtons.style.display = 'none';
+        } else {
+          paginationButtons.style.display = 'flex';
+
+          if (currentPage === 1) {
+            prevButton.classList.add('button-disabled');
+          } else {
+            prevButton.classList.remove('button-disabled');
+          }
+
+          if (currentPage >= totalPages) {
+            nextButton.classList.add('button-disabled');
+          } else {
+            nextButton.classList.remove('button-disabled');
+          }
+        }
+      }
+    };
+
+    if (p5Instance) {
+      p5Instance.remove();
+    }
+    p5Instance = new p5(s);
+  }
+
+  startSketch();
+
+  function filterGrid() {
+    startSketch();
+  }
+
+  document.querySelector('.artSelectField').addEventListener('change', filterGrid);
+</script>
+
+</body>
+</html>
