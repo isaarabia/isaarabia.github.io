@@ -4,12 +4,14 @@
     <meta charset="UTF-8">
     <title>Isa Arabia | Home</title>
 
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <!-- Font Awesome CDN -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
 
     <style>
         /*
@@ -25,12 +27,14 @@
             background: #090E1E !important;
         }
 
+
         #contentWrapper {
             height: 100vh; /* Same height as viewport */
             width: 100vw; /* Same width as viewport */
             overflow: hidden; /* No scrolling inside the wrapper */
             position: fixed; /* Fixed positioned to prevent natural scrolling */
         }
+
 
         /*
         ====================================================
@@ -43,12 +47,14 @@
             padding: 0;
         }
 
+
         .image-container {
             height: 100vh;
             width: 100vw;
             overflow: hidden;
             position: relative;
         }
+
 
         .image-container img {
             position: absolute;
@@ -61,6 +67,7 @@
             transition: transform 0.8s ease-in-out;
             transform: translateX(0%);
         }
+
 
         /*
         ====================================================
@@ -77,29 +84,35 @@
             transition: 0.8s ease-in-out; /* Adjusted transition timing */
         }
 
+
         #overlayTextHolder {
             margin-left: 3vw;
         }
+
 
         #overlayTextHolder > #overlayText {
             position: absolute;
             bottom: -0.5vw;
         }
 
+
         #overlayTextHolder > #topText {
             position: absolute;
             bottom: 16.5vw;
         }
+
 
         #topText.top-minimized {
             font-size: 15vw;
             bottom: 11.5vw !important;
         }
 
+
         #overlayText.overlay-minimized {
             font-size: 15vw;
             bottom: -0.5vw !important;
         }
+
 
         /*
         ====================================================
@@ -116,13 +129,16 @@
             transition: right 0.8s ease-in-out;
         }
 
+
         body.animation-triggered #leftPanel {
             right: 0;
         }
 
+
         body.animation-triggered #primatePhoto {
             transform: translateX(-26%);
         }
+
 
         /*
         ====================================================
@@ -142,16 +158,19 @@
         #c2aText > p { color: #EBE5ED; font-size: 22pt; font-weight: 400; margin-top: -5px; }
         .unselected { opacity: 0.7; }
 
+
         /*
        ====================================================
           Icon Styles
        ====================================================
        */
 
+
         .icon-row {
             text-align: right;
             margin-top: 15px;
         }
+
 
         .icon-row a {
             color: #fff;
@@ -160,9 +179,12 @@
             transition: color 0.3s;
         }
 
+
         .icon-row a:hover {
             color: #8C7BE2;
         }
+
+
 
 
         /*
@@ -182,6 +204,7 @@
             }
         }
 
+
         #bouncingArrow {
             display: inline-block;
             vertical-align: middle;
@@ -190,6 +213,7 @@
             cursor: pointer;
             animation: bounce 2.5s infinite;
 
+
             /* CSS caret shape */
             width: 2vw;
             height: 2vw;
@@ -197,15 +221,18 @@
             border-right: 0.65vw solid #fff;
             transform: rotate(45deg); /* Creates the 'v' shape */
 
+
             /* MODIFICATION: Added for fade-out effect */
             opacity: 1;
             transition: opacity 0.5s ease-out;
         }
 
+
         /* MODIFICATION: New rule to hide arrow on animation */
         body.animation-triggered #bouncingArrow {
             opacity: 0;
         }
+
 
         /*
         ====================================================
@@ -214,7 +241,17 @@
         */
         @media (max-width: 1300px) { body.animation-triggered #primatePhoto { transform:translateX(-35%) !important; } }
         @media (max-width: 1000px) { body.animation-triggered #primatePhoto { transform:translateX(-45%) !important; } .image-container img { transform: translateX(-20%); } }
-        @media (max-width: 850px) { #overlayText { display: none; } .headerText { font-size: 40vw; margin-bottom: 40px; } #textHolder { padding-left: 10px; bottom: 2vw !important; } #topText.top-minimized { display: none; } #leftPanel { width: 100vw; right: -100vw; } #c2aText > h1, #c2aText > p { text-align: center; } #c2aText { margin-right: 0vw; } .icon-row { text-align: center; } }
+        @media (max-width: 850px) {
+            #overlayText { display: none; }
+            .headerText { font-size: 40vw; margin-bottom: 40px; }
+            #textHolder { padding-left: 10px; bottom: 2vw !important; }
+            #topText.top-minimized { display: none; }
+            #leftPanel { width: 100vw; right: -100vw; }
+            #c2aText > h1, #c2aText > p { text-align: center; }
+            #c2aText { margin-right: 0vw; }
+            .icon-row { text-align: center; }
+            #portrait { margin: 0 auto 20px auto; }
+        }
         @media (max-width: 800px) { .image-container img { transform: translateX(-40%); } }
         @media (max-width: 1215px) { #c2aText > h1 { font-size: 38pt; } #c2aText > p { font-size: 18pt; } }
         @media (max-width: 980px) { #c2aText > h1 { font-size: 34pt; } }
@@ -233,6 +270,7 @@
     </div>
 </div>
 
+
 <div id="leftPanel">
     <nav>
         <ul class="nav-bar">
@@ -243,6 +281,7 @@
             <li><a href="index.html" id="specialText">ISA</a></li>
         </ul>
     </nav>
+
 
     <div id="c2aText">
         <img id="portrait" src="img/portrait_min.jpg">
@@ -256,10 +295,12 @@
     </div>
 </div>
 
+
 <div id="overlayTextHolder">
     <h1 class="headerText" id="topText">ISA<span id="bouncingArrow" title="Click to Explore"></span></h1>
     <h1 class="headerText" id="overlayText">ARABIA</h1>
 </div>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
@@ -267,20 +308,27 @@
             // Add a class to the body. CSS rules will handle the animation.
             document.body.classList.add('animation-triggered');
 
+
             // Add classes to the text elements to trigger their animations.
             document.getElementById('topText').classList.add('top-minimized');
             document.getElementById('overlayText').classList.add('overlay-minimized');
+
 
             // Remove the listeners after the first event to ensure it only runs once.
             document.removeEventListener('wheel', triggerOneTimeAnimation);
             document.getElementById('bouncingArrow').removeEventListener('click', triggerOneTimeAnimation);
         }
 
-        // Listen for the first 'wheel' event
-        document.addEventListener('wheel', triggerOneTimeAnimation, { once: true });
 
-        // Listen for the first 'click' event on the arrow
-        document.getElementById('bouncingArrow').addEventListener('click', triggerOneTimeAnimation, { once: true });
+        // Check the window width on page load
+        if (window.innerWidth <= 850) {
+            // If it's a "mobile" screen, trigger the animation immediately
+            triggerOneTimeAnimation();
+        } else {
+            // Otherwise, set up the listeners for scroll and click
+            document.addEventListener('wheel', triggerOneTimeAnimation, { once: true });
+            document.getElementById('bouncingArrow').addEventListener('click', triggerOneTimeAnimation, { once: true });
+        }
     });
 </script>
 </body>
