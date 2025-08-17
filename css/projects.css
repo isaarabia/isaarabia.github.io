@@ -6,7 +6,7 @@
     overflow-x: hidden !important;
 }
 
-#fakeContainer {
+#navContainer {
     width: 48vw;
     position: absolute;
     right: 0;
@@ -14,17 +14,10 @@
 }
 
 @media only screen and (max-width: 1000px) {
-    #fakeContainer {
+    #navContainer {
         width: 100vw;
     }
 
-}
-
-.selected {
-    /*color: #7E70CD !important;*/
-    /*font-weight: 600 !important;*/
-    /*border-bottom: 1px solid #fff;*/
-    /*opacity: 0.7;*/
 }
 
 .selected:hover {
