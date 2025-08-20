@@ -33,7 +33,7 @@
 
     .cvLight {
       color: #fff;
-      width: 100vw;
+      width: 70vw;
     }
 
     .cvDark {
@@ -45,12 +45,24 @@
     }
 
     .innerCvDark {
-        width: 75%;
+        width: 70%;
     }
 
     .cvDark > div > div .cv-header {
       mix-blend-mode: normal !important;
       color: #242424;
+    }
+
+    @media (max-width: 650px) {
+        .innerCvDark {
+            width: 90%;
+        }
+        .cvLight {
+            width: 90%;
+        }
+        .cv-header {
+            font-size: 30pt;
+        }
     }
 
 
@@ -151,7 +163,7 @@
     </nav>
 </div>
 
-<div class="cvContainer cvLight" style="width:70vw !important;">
+<div class="cvContainer cvLight">
   <div class="container">
     <div class="row">
       <div class="cv-header-container">
@@ -493,7 +505,7 @@
   </div>
 </div>
 
-<div class="cvContainer cvLight" style="padding-bottom: 150px; width:70vw !important;">
+<div class="cvContainer cvLight" style="padding-bottom: 150px;">
   <div class="container">
     <div class="row">
       <div class="col">
