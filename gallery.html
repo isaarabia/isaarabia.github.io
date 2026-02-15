@@ -273,9 +273,7 @@
 
 
 <!-- Popup element -->
-<!-- Added onclick to close on scrim click -->
 <div id="popupOverlay" onclick="closePopup(event)">
-    <!-- Added event.stopPropagation to prevent closing when clicking the image container -->
     <div class="popup" onclick="event.stopPropagation()">
         <i class="fas fa-times close-button" onclick="closePopup(event)"></i>
         <img id="popupImage" src="" alt="Larger version">
@@ -312,28 +310,58 @@
 
 
     function setup() {
-        const containerWidth = document.getElementById('sketchContainer2').offsetWidth;
+        // Create canvas initially; size will be set by calculateLayout
+        let c = createCanvas(100, 100);
+        c.parent('sketchContainer2');
+
+        // Calculate initial layout
+        calculateLayout();
+    }
+
+
+    // Helper function to calculate grid layout based on current window width
+    function calculateLayout() {
+        const container = document.getElementById('sketchContainer2');
+        if (!container) return;
+
+
+        const containerWidth = container.offsetWidth;
         const availableWidth = containerWidth - 2 * margin;
         imgWidth = availableWidth / 3;
 
 
         columns = [[], [], []];
+        columnHeights = [0, 0, 0];
 
 
         images.forEach((img, index) => {
-            img.resize(imgWidth, 0);
+            // Calculate display height based on new width (preserving aspect ratio)
+            let aspectRatio = img.height / img.width;
+            let displayHeight = imgWidth * aspectRatio;
 
 
-            const shortestColumn = columnHeights.indexOf(Math.min(...columnHeights));
-            columns[shortestColumn].push({ img, originalIndex: index + 1 });
-            columnHeights[shortestColumn] += img.height + margin;
+            const shortestColumnIndex = columnHeights.indexOf(Math.min(...columnHeights));
+
+            // Store image with its calculated display dimensions
+            columns[shortestColumnIndex].push({
+                img,
+                originalIndex: index + 1,
+                w: imgWidth,
+                h: displayHeight
+            });
+
+            columnHeights[shortestColumnIndex] += displayHeight + margin;
         });
 
 
         const totalHeight = Math.max(...columnHeights) + margin;
+        resizeCanvas(containerWidth, totalHeight);
+    }
 
 
-        createCanvas(containerWidth, totalHeight).parent('sketchContainer2');
+    // p5.js event that triggers when window is resized
+    function windowResized() {
+        calculateLayout();
     }
 
 
@@ -347,19 +375,22 @@
 
         for (let columnIndex = 0; columnIndex < columns.length; columnIndex++) {
             let yOffset = margin / 2;
-            columns[columnIndex].forEach(({ img, originalIndex }) => {
-                // Check if mouse is over the image
-                let isHovering = mouseX > xOffset && mouseX < xOffset + img.width && mouseY > yOffset && mouseY < yOffset + img.height;
+            columns[columnIndex].forEach(({ img, originalIndex, w, h }) => {
+
+                // Check if mouse is over the image using the calculated dimensions (w, h)
+                let isHovering = mouseX > xOffset && mouseX < xOffset + w && mouseY > yOffset && mouseY < yOffset + h;
 
                 // Check if hovering AND popup is closed
                 if (!popupOpen && isHovering) {
                     cursor(HAND);
-                    tint(255, 229); // 0.9 * 255 = 229 to set the transparency
-                    cursorSet = true; // avoid setting the cursor to ARROW
+                    tint(255, 229);
+                    cursorSet = true;
                 } else {
-                    noTint(); // reset tint if not hovering or if popup is open
+                    noTint();
                 }
-                image(img, xOffset, yOffset);
+
+                // Draw image using calculated dimensions
+                image(img, xOffset, yOffset, w, h);
 
 
                 // Only allow clicking if popup is closed
@@ -368,7 +399,7 @@
                 }
 
 
-                yOffset += img.height + margin;
+                yOffset += h + margin;
             });
             xOffset += imgWidth + margin;
         }
@@ -398,8 +429,6 @@
         imgLoader.src = highResUrl;
 
         imgLoader.onload = () => {
-            // Only swap to high-res if the user hasn't closed the popup
-            // or switched images in the meantime.
             if (popupOpen && currentPopupIndex === originalIndex) {
                 popupImage.src = highResUrl;
             }
@@ -408,7 +437,6 @@
 
 
     function closePopup(event) {
-        // If this was triggered by an event (click or key), stop propagation
         if (event) event.stopPropagation();
 
         popupOpen = false;
@@ -417,7 +445,6 @@
     }
 
 
-    // Add global listener for Enter and Escape keys
     document.addEventListener('keydown', function(event) {
         if (popupOpen && (event.key === 'Enter' || event.key === 'Escape')) {
             closePopup(event);
