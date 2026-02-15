@@ -301,6 +301,10 @@
     let popupOpen = false; // To track if the popup is open
     let currentPopupIndex = -1; // To track which image is currently targeted by the popup
 
+    // Variables to track touch/click start position
+    let startX = 0;
+    let startY = 0;
+
 
     function preload() {
         for (let i = 1; i <= numImages; i++) {
@@ -310,16 +314,12 @@
 
 
     function setup() {
-        // Create canvas initially; size will be set by calculateLayout
         let c = createCanvas(100, 100);
         c.parent('sketchContainer2');
-
-        // Calculate initial layout
         calculateLayout();
     }
 
 
-    // Helper function to calculate grid layout based on current window width
     function calculateLayout() {
         const container = document.getElementById('sketchContainer2');
         if (!container) return;
@@ -335,14 +335,12 @@
 
 
         images.forEach((img, index) => {
-            // Calculate display height based on new width (preserving aspect ratio)
             let aspectRatio = img.height / img.width;
             let displayHeight = imgWidth * aspectRatio;
 
 
             const shortestColumnIndex = columnHeights.indexOf(Math.min(...columnHeights));
 
-            // Store image with its calculated display dimensions
             columns[shortestColumnIndex].push({
                 img,
                 originalIndex: index + 1,
@@ -359,9 +357,49 @@
     }
 
 
-    // p5.js event that triggers when window is resized
     function windowResized() {
         calculateLayout();
+    }
+
+
+    // Capture start position of click/touch
+    function mousePressed() {
+        startX = mouseX;
+        startY = mouseY;
+    }
+
+
+    // Handle click detection logic (separating click from scroll)
+    function mouseReleased() {
+        if (popupOpen) return;
+
+        // Check if click/touch is inside the canvas bounds
+        if (mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) return;
+
+
+        // Calculate distance moved. If > 10px, treat as scroll and ignore.
+        let d = dist(startX, startY, mouseX, mouseY);
+        if (d > 10) return;
+
+
+        // Perform hit test on images
+        let xOffset = margin / 2;
+        for (let columnIndex = 0; columnIndex < columns.length; columnIndex++) {
+            let yOffset = margin / 2;
+            for (let i = 0; i < columns[columnIndex].length; i++) {
+                let item = columns[columnIndex][i];
+
+                // Check collision with image bounds
+                if (mouseX > xOffset && mouseX < xOffset + item.w &&
+                    mouseY > yOffset && mouseY < yOffset + item.h) {
+                    openPopup(item.originalIndex);
+                    return; // Stop checking after finding the match
+                }
+
+                yOffset += item.h + margin;
+            }
+            xOffset += imgWidth + margin;
+        }
     }
 
 
@@ -370,17 +408,16 @@
 
 
         let xOffset = margin / 2;
-        let cursorSet = false; // to check if cursor should be set to HAND
+        let cursorSet = false;
 
 
         for (let columnIndex = 0; columnIndex < columns.length; columnIndex++) {
             let yOffset = margin / 2;
             columns[columnIndex].forEach(({ img, originalIndex, w, h }) => {
 
-                // Check if mouse is over the image using the calculated dimensions (w, h)
                 let isHovering = mouseX > xOffset && mouseX < xOffset + w && mouseY > yOffset && mouseY < yOffset + h;
 
-                // Check if hovering AND popup is closed
+                // Visual hover effects (only if popup is closed)
                 if (!popupOpen && isHovering) {
                     cursor(HAND);
                     tint(255, 229);
@@ -389,14 +426,9 @@
                     noTint();
                 }
 
-                // Draw image using calculated dimensions
                 image(img, xOffset, yOffset, w, h);
 
-
-                // Only allow clicking if popup is closed
-                if (!popupOpen && isHovering) {
-                    if (mouseIsPressed) openPopup(originalIndex);
-                }
+                // NOTE: Click logic has been moved to mouseReleased() to fix mobile scrolling issues
 
 
                 yOffset += h + margin;
@@ -418,12 +450,10 @@
         const popupImage = document.getElementById('popupImage');
 
 
-        // 1. Immediately show the low-res version.
         popupImage.src = srcText + `${originalIndex}.png`;
         popupOverlay.style.display = 'flex';
 
 
-        // 2. Start loading the high-res version in the background.
         const highResUrl = srcText + `${originalIndex}_max.png`;
         const imgLoader = new Image();
         imgLoader.src = highResUrl;
