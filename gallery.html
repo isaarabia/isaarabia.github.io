@@ -9,20 +9,16 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-
     <!-- Include Font Awesome for the close button -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-
 
     <style>
         #projectsBody {
             background: #090E1E;
-            /* Ensuring body takes full height to allow scrolling */
             min-height: 100vh;
             margin: 0;
             overflow-x: hidden !important;
         }
-
 
         #navContainer {
             width: 48vw;
@@ -31,49 +27,82 @@
             top: 0;
         }
 
-
         @media only screen and (max-width: 1000px) {
             #navContainer {
                 width: 100vw;
             }
-
-
         }
-
 
         .selected:hover {
             opacity: 1 !important;
         }
 
-
         #sketchContainer1 {
             width: 100%;
             height: 85vh;
-            /*background: red;*/
             margin-top: 10vh;
         }
 
-
         #sketchContainer2 {
             width: 90%;
-            height: auto; /* Allow to dynamically change */
+            height: auto;
             margin-left: auto;
             margin-right: auto;
             position: relative;
-            overflow: visible; /* This ensures that overflowing elements aren't cut off */
+            overflow: visible;
             margin-top: 150px;
         }
-
 
         body {
             overflow: visible !important;
         }
 
-
         img {
             pointer-events: none;
         }
 
+        /* --- LOADER STYLES --- */
+        #p5_loading {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            min-height: 40vh;
+            margin-top: 50px;
+        }
+
+        .loader-spinner {
+            width: 50px;
+            height: 50px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top-color: #8C7BE2; /* Match purple accent from Web Page A */
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+
+        .loader-text {
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.9rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-weight: 500;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.5; }
+            50% { opacity: 1; }
+            100% { opacity: 0.5; }
+        }
+        /* --------------------- */
 
         .close-button {
             text-shadow:
@@ -82,22 +111,17 @@
             transition: text-shadow 0.2s ease, transform 0.2s ease;
         }
 
-
         .close-button:hover {
             transform:scale(0.95);
             opacity: 0.9;
         }
 
-
         .outerTitleContainer {
             display: flex;
             justify-content: center;
             align-items: center;
-            width: 100%; /* Ensure it takes up the full width */
-
-
+            width: 100%;
         }
-
 
         .titleBox {
             width: 50%;
@@ -106,36 +130,24 @@
             margin-left: auto;
             margin-right: auto;
             position: relative;
-
-
         }
-
 
         .decorativeBox {
             width: 35vw;
             height: 35vw;
             background-image: url(../img/backgroundPhoto.jpg);
             background-size:cover;
-
-
-
-
         }
-
 
         .categoryTitle > h1 {
             font-size: 13vw;
             font-family: Montserrat;
             font-weight: 800;
             color: #fff;
-            /*margin-left: 50%;*/
             padding-top: 38%;
             mix-blend-mode: difference;
             text-align: center;
-
-
         }
-
 
         .projectIntroducer {
             position: relative;
@@ -143,17 +155,12 @@
             justify-content: center;
             align-items: center;
             margin-top: 15vh;
-            width: calc(60% - 25px); /* Match #sketchContainer2's width including margin */
-            margin-left: auto; /* Center the element */
-            margin-right: auto; /* Center the element */
-            /* Optional: Ensure it only takes space if necessary */
+            width: calc(60% - 25px);
+            margin-left: auto;
+            margin-right: auto;
             max-width: 100%;
-            box-sizing: border-box; /* Include padding, border in the element's total width and height */
-            /*margin-bottom: 50px;*/
-
-
+            box-sizing: border-box;
         }
-
 
         .projectIntroducer > h1 {
             font-family: Montserrat, sans-serif;
@@ -165,10 +172,7 @@
             margin-top: 6vw;
             margin-left: -5vw;
             font-size: 8vw;
-
-
         }
-
 
         .imageContainer {
             position: relative;
@@ -183,9 +187,6 @@
             border-radius: 50%;
         }
 
-
-
-
         #popupOverlay {
             display: none;
             position: fixed;
@@ -199,7 +200,6 @@
             z-index: 1000;
         }
 
-
         .popup {
             background: transparent;
             position: relative;
@@ -207,19 +207,16 @@
             justify-content: center;
             align-items: center;
             overflow: hidden;
-            /*padding: 10px; !* Optional: add a bit of padding *!*/
             box-sizing: border-box;
         }
-
 
         .popup img {
             width: auto;
             height: auto;
-            max-width: 90vw; /* Maximum width relative to viewport */
-            max-height: 90vh; /* Maximum height relative to viewport */
-            object-fit: contain; /* Ensures the image fully fits within the boundaries */
+            max-width: 90vw;
+            max-height: 90vh;
+            object-fit: contain;
         }
-
 
         .close-button {
             position: absolute;
@@ -232,29 +229,19 @@
             transition: 0.2s;
         }
 
-
         .close-button:hover {
             transform:scale(0.95);
             opacity: 0.9;
         }
-
-
-
-
     </style>
 
-
 </head>
-
-
 <body id="projectsBody">
-
 
 <div id="navContainer">
     <nav>
         <ul class="nav-bar">
             <li><a href="projects.html" class="unselected">projects</a></li>
-            <!--            <li><a href="#about" class="unselected">projects</a></li>-->
             <li><a href="gallery.html">gallery</a></li>
             <li><a href="about.html" class="unselected">about</a></li>
             <li><a href="index.html#home" id="specialText">ISA</a></li>
@@ -262,15 +249,18 @@
     </nav>
 </div>
 
-
 <div class="projectIntroducer">
     <div class="imageContainer" style="background-image: url('img/gallery/9_max.png')"></div>
     <h1>GALLERY</h1>
 </div>
 
+<!-- Loader Element (p5.js automatically displays this during preload and hides it on setup) -->
+<div id="p5_loading">
+    <div class="loader-spinner"></div>
+    <div class="loader-text">Loading Gallery...</div>
+</div>
 
 <div id="sketchContainer2"></div>
-
 
 <!-- Popup element -->
 <div id="popupOverlay" onclick="closePopup(event)">
@@ -280,38 +270,31 @@
     </div>
 </div>
 
-
 <script src="https://cdn.jsdelivr.net/npm/p5@1.11.0/lib/p5.min.js"></script>
 
-
 <script>
-
-
     const numImages = 40;
     let srcText = `img/gallery/`;
-
-
     let columns;
     let images = [];
-
+    let itemStates = []; // Track individual states for smooth transitions
 
     let columnHeights = [0, 0, 0];
-    const margin = 25; // Margin in pixels for both horizontal and vertical spacing
+    const margin = 25;
     let imgWidth;
-    let popupOpen = false; // To track if the popup is open
-    let currentPopupIndex = -1; // To track which image is currently targeted by the popup
+    let popupOpen = false;
+    let currentPopupIndex = -1;
 
-    // Variables to track touch/click start position
     let startX = 0;
     let startY = 0;
-
 
     function preload() {
         for (let i = 1; i <= numImages; i++) {
             images.push(loadImage(srcText + `${i}.png`));
+            // Initialize transition states for Container Scale, Image Scale, and Dim Alpha
+            itemStates.push({ contScale: 1, imgScale: 1, dimOpacity: 0 });
         }
     }
-
 
     function setup() {
         let c = createCanvas(100, 100);
@@ -319,25 +302,20 @@
         calculateLayout();
     }
 
-
     function calculateLayout() {
         const container = document.getElementById('sketchContainer2');
         if (!container) return;
-
 
         const containerWidth = container.offsetWidth;
         const availableWidth = containerWidth - 2 * margin;
         imgWidth = availableWidth / 3;
 
-
         columns = [[], [], []];
         columnHeights = [0, 0, 0];
-
 
         images.forEach((img, index) => {
             let aspectRatio = img.height / img.width;
             let displayHeight = imgWidth * aspectRatio;
-
 
             const shortestColumnIndex = columnHeights.indexOf(Math.min(...columnHeights));
 
@@ -351,49 +329,37 @@
             columnHeights[shortestColumnIndex] += displayHeight + margin;
         });
 
-
         const totalHeight = Math.max(...columnHeights) + margin;
         resizeCanvas(containerWidth, totalHeight);
     }
-
 
     function windowResized() {
         calculateLayout();
     }
 
-
-    // Capture start position of click/touch
     function mousePressed() {
         startX = mouseX;
         startY = mouseY;
     }
 
-
-    // Handle click detection logic (separating click from scroll)
     function mouseReleased() {
         if (popupOpen) return;
 
-        // Check if click/touch is inside the canvas bounds
         if (mouseX < 0 || mouseX > width || mouseY < 0 || mouseY > height) return;
 
-
-        // Calculate distance moved. If > 10px, treat as scroll and ignore.
         let d = dist(startX, startY, mouseX, mouseY);
         if (d > 10) return;
 
-
-        // Perform hit test on images
         let xOffset = margin / 2;
         for (let columnIndex = 0; columnIndex < columns.length; columnIndex++) {
             let yOffset = margin / 2;
             for (let i = 0; i < columns[columnIndex].length; i++) {
                 let item = columns[columnIndex][i];
 
-                // Check collision with image bounds
                 if (mouseX > xOffset && mouseX < xOffset + item.w &&
                     mouseY > yOffset && mouseY < yOffset + item.h) {
                     openPopup(item.originalIndex);
-                    return; // Stop checking after finding the match
+                    return;
                 }
 
                 yOffset += item.h + margin;
@@ -402,46 +368,149 @@
         }
     }
 
-
     function draw() {
         background('#090E1E');
 
+        let hoveredIndex = -1;
 
+        // 1. Determine which item is currently hovered over
+        let checkX = margin / 2;
+        for (let columnIndex = 0; columnIndex < columns.length; columnIndex++) {
+            let checkY = margin / 2;
+            for (let i = 0; i < columns[columnIndex].length; i++) {
+                let item = columns[columnIndex][i];
+                if (!popupOpen && mouseX > checkX && mouseX < checkX + item.w && mouseY > checkY && mouseY < checkY + item.h) {
+                    hoveredIndex = item.originalIndex - 1;
+                }
+                checkY += item.h + margin;
+            }
+            checkX += imgWidth + margin;
+        }
+
+        if (hoveredIndex !== -1 && !popupOpen) {
+            cursor(HAND);
+        } else {
+            cursor(ARROW);
+        }
+
+        let normalItems = [];
+        let elevatedItems = [];
+
+        // 2. Map transition states & split layering
         let xOffset = margin / 2;
-        let cursorSet = false;
-
-
         for (let columnIndex = 0; columnIndex < columns.length; columnIndex++) {
             let yOffset = margin / 2;
-            columns[columnIndex].forEach(({ img, originalIndex, w, h }) => {
+            for (let i = 0; i < columns[columnIndex].length; i++) {
+                let item = columns[columnIndex][i];
+                let sIndex = item.originalIndex - 1;
+                let state = itemStates[sIndex];
 
-                let isHovering = mouseX > xOffset && mouseX < xOffset + w && mouseY > yOffset && mouseY < yOffset + h;
+                let isHovered = (hoveredIndex === sIndex);
 
-                // Visual hover effects (only if popup is closed)
-                if (!popupOpen && isHovering) {
-                    cursor(HAND);
-                    tint(255, 229);
-                    cursorSet = true;
+                // Target expand values
+                let targetContScale = isHovered ? 1.015 : 1;
+                let targetImgScale = isHovered ? 1.05 : 1;
+                let targetDim = isHovered ? 0.7 : 0;
+
+                // Smoothly interpolate values
+                state.contScale = lerp(state.contScale, targetContScale, 0.15);
+                state.imgScale = lerp(state.imgScale, targetImgScale, 0.15);
+                state.dimOpacity = lerp(state.dimOpacity, targetDim, 0.15);
+
+                // OPTIMIZATION: Snap values exactly to target when close,
+                // ensuring the browser doesn't compute infinite decimal animations.
+                if (Math.abs(state.contScale - targetContScale) < 0.001) state.contScale = targetContScale;
+                if (Math.abs(state.imgScale - targetImgScale) < 0.001) state.imgScale = targetImgScale;
+                if (Math.abs(state.dimOpacity - targetDim) < 0.001) state.dimOpacity = targetDim;
+
+                let drawData = { item, x: xOffset, y: yOffset, state };
+
+                // Ensure hovered/animating items render on top of overlapping idle neighbors
+                if (state.contScale > 1.001) {
+                    elevatedItems.push(drawData);
                 } else {
-                    noTint();
+                    normalItems.push(drawData);
                 }
 
-                image(img, xOffset, yOffset, w, h);
-
-                // NOTE: Click logic has been moved to mouseReleased() to fix mobile scrolling issues
-
-
-                yOffset += h + margin;
-            });
+                yOffset += item.h + margin;
+            }
             xOffset += imgWidth + margin;
         }
 
+        // 3. Draw Normal items first
+        for (let d of normalItems) {
+            drawGalleryItem(d);
+        }
 
-        if (!cursorSet) {
-            cursor(ARROW);
+        // 4. Draw Elevated items on top
+        for (let d of elevatedItems) {
+            drawGalleryItem(d);
         }
     }
 
+    function drawGalleryItem(d) {
+        let { item, x, y, state } = d;
+        let w = item.w;
+        let h = item.h;
+
+        push();
+        translate(x + w / 2, y + h / 2);
+
+        // OPTIMIZATION: Is this specific item currently expanding, fading, or zooming?
+        let isActive = state.contScale > 1 || state.imgScale > 1 || state.dimOpacity > 0;
+
+        if (isActive) {
+            scale(state.contScale);
+
+            // 1. Draw Container Drop Shadow
+            if (state.contScale > 1) {
+                let shadowY = map(state.contScale, 1, 1.015, 4, 15);
+                let shadowBlur = map(state.contScale, 1, 1.015, 10, 30);
+                let shadowAlpha = map(state.contScale, 1, 1.015, 0.3, 0.5);
+
+                drawingContext.shadowOffsetX = 0;
+                drawingContext.shadowOffsetY = shadowY;
+                drawingContext.shadowBlur = shadowBlur;
+                drawingContext.shadowColor = `rgba(0,0,0,${shadowAlpha})`;
+
+                noStroke();
+                fill('#090E1E');
+                rectMode(CENTER);
+                rect(0, 0, w, h);
+
+                // Reset shadow so it doesn't bleed into the image
+                drawingContext.shadowColor = 'transparent';
+                drawingContext.shadowBlur = 0;
+            }
+
+            // 2. Draw Clipped Image
+            drawingContext.save();
+            drawingContext.beginPath();
+            drawingContext.rect(-w / 2, -h / 2, w, h);
+            drawingContext.clip();
+
+            scale(state.imgScale);
+            imageMode(CENTER);
+            image(item.img, 0, 0, w, h);
+
+            drawingContext.restore();
+
+            // 3. Draw Dim Overlay
+            if (state.dimOpacity > 0) {
+                noStroke();
+                fill(9, 14, 30, state.dimOpacity * 255);
+                rectMode(CENTER);
+                rect(0, 0, w, h);
+            }
+
+        } else {
+            // HIGH PERFORMANCE PATH (Bypasses Shadows and Clipping Masks for Idle Images)
+            imageMode(CENTER);
+            image(item.img, 0, 0, w, h);
+        }
+
+        pop();
+    }
 
     function openPopup(originalIndex) {
         popupOpen = true;
@@ -449,10 +518,8 @@
         const popupOverlay = document.getElementById('popupOverlay');
         const popupImage = document.getElementById('popupImage');
 
-
         popupImage.src = srcText + `${originalIndex}.png`;
         popupOverlay.style.display = 'flex';
-
 
         const highResUrl = srcText + `${originalIndex}_max.png`;
         const imgLoader = new Image();
@@ -465,7 +532,6 @@
         };
     }
 
-
     function closePopup(event) {
         if (event) event.stopPropagation();
 
@@ -474,19 +540,12 @@
         document.getElementById('popupOverlay').style.display = 'none';
     }
 
-
     document.addEventListener('keydown', function(event) {
         if (popupOpen && (event.key === 'Enter' || event.key === 'Escape')) {
             closePopup(event);
         }
     });
-
-
 </script>
-
-
-<p style="display:none;" id="p5_loading"></p>
-
 
 </body>
 </html>

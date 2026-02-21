@@ -5,26 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ac6d5d9e-9154-49d8-b2ed-21612d647d64" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/Old/projects.html" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/projects/colony_X.JPG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/projects/comic.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/projects/kibale.JPG" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/projects/ndvi.png" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/projects/nhec.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/projects/nhec_2.jpeg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/img/projects/wired_amazon.jpg" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/projects/nhec.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/about.html" beforeDir="false" afterPath="$PROJECT_DIR$/about.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/design.html" beforeDir="false" afterPath="$PROJECT_DIR$/Old/design.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/drawing.html" beforeDir="false" afterPath="$PROJECT_DIR$/Old/drawing.html" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/gallery.html" beforeDir="false" afterPath="$PROJECT_DIR$/gallery.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/gallery/41.png" beforeDir="false" afterPath="$PROJECT_DIR$/img/projects/traniello.png" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/img/gallery/41_max.png" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/index.html" beforeDir="false" afterPath="$PROJECT_DIR$/index.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/index2.html" beforeDir="false" afterPath="$PROJECT_DIR$/Old/index2.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/photo.html" beforeDir="false" afterPath="$PROJECT_DIR$/Old/photo.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/projects.html" beforeDir="false" afterPath="$PROJECT_DIR$/projects.html" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/video.html" beforeDir="false" afterPath="$PROJECT_DIR$/Old/video.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -86,7 +69,7 @@
       <option name="presentableId" value="Default" />
       <updated>1771705382980</updated>
       <workItem from="1771705384032" duration="502000" />
-      <workItem from="1771706089087" duration="9037000" />
+      <workItem from="1771706089087" duration="10285000" />
     </task>
     <servers />
   </component>
