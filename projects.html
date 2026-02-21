@@ -1,165 +1,488 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Isa Arabia | Projects</title>
+    <meta charset="UTF-8">
+    <title>Isa Arabia | Projects</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link href="css/projects.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <!-- Include Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://kit.fontawesome.com/b5f3cf720c.js" crossorigin="anonymous"></script>
 
-  <link href="css/projects.css" rel="stylesheet">
-  <link href="css/styles.css" rel="stylesheet">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <style>
+        #projectsBody {
+            background: #090E1E;
+            min-height: 100vh;
+            margin: 0;
+            overflow-x: hidden !important;
+            -webkit-font-smoothing: antialiased;
+        }
 
+        /* --- PROJECTS SECTION --- */
+        .projects-section {
+            font-family: 'Montserrat', sans-serif;
+            color: white;
+            padding: 140px 0 80px 0;
+        }
+
+        .projects-container {
+            width: 90%;
+            max-width: 100%;
+            margin: 0 auto;
+        }
+
+        /* --- FILTER CHIPS --- */
+        .filter-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            margin-bottom: 50px;
+            justify-content: flex-start;
+        }
+
+        .filter-chip {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 8px 24px;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease-out;
+            letter-spacing: 1px;
+        }
+
+        .filter-chip:hover,
+        .filter-chip.active {
+            background: #ffffff;
+            border-color: #ffffff;
+            color: #090E1E;
+            font-weight: 700;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 255, 255, 0.2);
+        }
+
+        /* --- GRID STYLES --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 80px 50px;
+        }
+
+        @media (min-width: 768px) {
+            .projects-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        /* --- GRID ITEM --- */
+        .project-item {
+            display: flex;
+            flex-direction: column;
+            text-decoration: none;
+            color: white;
+            cursor: pointer;
+            will-change: transform;
+            transition: transform 0.3s ease-out;
+            position: relative;
+            /* Fixes flickering on some browsers during nested transforms */
+            backface-visibility: hidden;
+        }
+
+        .project-item.hide {
+            display: none;
+        }
+
+        .project-item:hover {
+            transform: scale(1.015);
+        }
+
+        /* LINE 1: Big Image & Container */
+        .image-container {
+            position: relative;
+            width: 100%;
+            aspect-ratio: 16 / 9;
+            border-radius: 0;
+            overflow: hidden;
+            margin-bottom: 20px;
+            /* Match background to body to prevent white lines during scaling */
+            background-color: #090E1E;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: box-shadow 0.3s ease;
+
+            /* STABILIZATION FIXES */
+            transform: translate3d(0, 0, 0);
+            -webkit-mask-image: -webkit-radial-gradient(white, black); /* Webkit clipping fix */
+        }
+
+        .image-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            will-change: transform;
+            transition: transform 0.4s ease-out;
+            /* Prevents image jitter during scale */
+            backface-visibility: hidden;
+            transform: translateZ(0);
+        }
+
+        .project-item:hover .image-container img {
+            transform: scale(1.05);
+        }
+
+        .project-item:hover .image-container {
+            box-shadow: 0 15px 30px rgba(0,0,0,0.5);
+        }
+
+        /* --- TINT OVERLAY (STABILIZED) --- */
+        .image-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(9, 14, 30, 0.7);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+            pointer-events: none;
+            z-index: 1;
+            /* Performance optimization */
+            will-change: opacity;
+        }
+
+        .project-item:hover .image-container::after {
+            opacity: 1;
+        }
+
+        /* --- READ MORE --- */
+        .read-more-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2;
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            transform: translateY(10px);
+            pointer-events: none;
+        }
+
+        .read-more-text {
+            color: white;
+            font-size: 1.3rem;
+            font-weight: 400;
+            text-transform: lowercase;
+            letter-spacing: 2px;
+            border-bottom: 4px solid #8C7BE2;
+            padding-bottom: 4px;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        .project-item:hover .read-more-overlay {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* LINE 2: Label & Dots */
+        .meta-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 8px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        .meta-label {
+            opacity: 0.7;
+            text-transform: capitalize;
+            letter-spacing: 1px;
+        }
+
+        .meta-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+            display: flex;
+            gap: 15px;
+        }
+
+        .meta-list li {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            display: block;
+        }
+
+        /* LINE 3: Big Title */
+        .project-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin: 0 0 12px 0;
+            text-align: left;
+            line-height: 1.2;
+            color: white;
+        }
+
+        /* AWARDS CONTAINER */
+        .awards-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 4px;
+        }
+
+        /* AWARD CHIP */
+        .award-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 5px 12px;
+            background: rgba(140, 123, 226, 0.1);
+            border: 1px solid rgba(140, 123, 226, 0.4);
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: #8C7BE2;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            width: fit-content;
+            margin-bottom: 0;
+        }
+
+        .award-chip i {
+            font-size: 0.8rem;
+        }
+
+    </style>
 </head>
-<body id="projectsBody" style="overflow: hidden !important;">
 
-<div id="fakeContainer">
-  <nav>
-    <ul class="nav-bar">
-      <!--            <li><a href="#home" class="unselected">about</a></li>-->
-      <li><a href="" class="unselected">cv</a></li>
-      <li><a href="#about" class="unselected">science</a></li>
-      <li><a href="projects.html">art</a></li>
-      <li><a href="https://www.linkedin.com/in/isabellaarabia/" target="_blank" class="unselected">contact</a></li>
-      <li><a href="index.html" id="specialText">ISA</a></li>
-    </ul>
-  </nav>
+<body id="projectsBody">
+
+<div id="navContainer">
+    <nav>
+        <ul class="nav-bar">
+            <li><a href="projects.html">projects</a></li>
+            <li><a href="gallery.html" class="unselected">gallery</a></li>
+            <li><a href="about.html" class="unselected">about</a></li>
+            <li><a href="index.html#home" id="specialText">ISA</a></li>
+        </ul>
+    </nav>
 </div>
 
-<div id="sketchContainer1">
+<section class="projects-section">
+    <div class="projects-container">
 
-</div>
+        <!-- Filter Chips -->
+        <div class="filter-container">
+            <button class="filter-chip active" data-filter="all">All</button>
+            <button class="filter-chip" data-filter="biology">Biology</button>
+            <button class="filter-chip" data-filter="art">Art</button>
+            <button class="filter-chip" data-filter="research">Research</button>
+            <button class="filter-chip" data-filter="fieldwork">Fieldwork</button>
+        </div>
 
-<script src="https://cdn.jsdelivr.net/npm/p5@1.11.0/lib/p5.min.js"></script>
+        <!-- Grid -->
+        <div class="projects-grid">
 
+            <!-- Project 1 -->
+            <a href="https://www.tuftsdaily.com/article/2026/01/at-the-intersection-of-art-and-biology-lablines-project-launching-soon-at-tufts" target="_blank" class="project-item" data-category="art biology">
+                <div class="image-container">
+                    <img src="img/projects/comic.jpeg" alt="Abstract Art Science">
+                    <!-- Overlay Text -->
+                    <div class="read-more-overlay">
+                        <span class="read-more-text">Read More</span>
+                    </div>
+                </div>
+                <div class="meta-row">
+                    <span class="meta-label">Jan 2026 - present</span>
+                    <ul class="meta-list">
+                        <li><span class="dot" style="background-color: #28C9F5;"></span>Outreach</li>
+                        <li><span class="dot" style="background-color: #FF00FF;"></span>Art-Science</li>
+                    </ul>
+                </div>
+                <div class="project-title">LABLINES: Launching an Art–Science Initiative at Tufts</div>
+                <div class="awards-container">
+                    <div class="award-chip">
+                        <i class="fa-solid fa-award"></i> MUSE Grant Recipient
+                    </div>
+                </div>
+            </a>
+
+            <!-- Project 2 -->
+            <a href="https://kibalechimpanzees.wordpress.com/" target="_blank" class="project-item" data-category="biology research">
+                <div class="image-container">
+                    <img src="img/projects/kibale.JPG" alt="Chimpanzee Research">
+                    <div class="read-more-overlay">
+                        <span class="read-more-text">Read More</span>
+                    </div>
+                </div>
+                <div class="meta-row">
+                    <span class="meta-label">Sep 2024 - present</span>
+                    <ul class="meta-list">
+                        <li><span class="dot" style="background-color: #27C93F;"></span>Kibale Chimpanzee Project</li>
+                        <li><span class="dot" style="background-color: #FFBD2E;"></span>Research</li>
+                    </ul>
+                </div>
+                <div class="project-title">Old Chimps Still Got It: Machanda Lab Research</div>
+                <div class="awards-container">
+                    <div class="award-chip">
+                        <i class="fa-solid fa-trophy"></i> NEEP 2025 Best Student Poster
+                    </div>
+                    <div class="award-chip">
+                        <i class="fa-solid fa-microphone-lines"></i> AABA 2026 Podium Presenter
+                    </div>
+                </div>
+            </a>
+
+            <!-- Project 3 -->
+            <a href="https://sites.bu.edu/traniellolab/" target="_blank" class="project-item" data-category="biology research fieldwork">
+                <div class="image-container">
+                    <img src="img/projects/traniello.png" alt="Leafcutter Ants Ecology">
+                    <div class="read-more-overlay">
+                        <span class="read-more-text">Read More</span>
+                    </div>
+                </div>
+                <div class="meta-row">
+                    <span class="meta-label">May 2024 - Aug 2025</span>
+                    <ul class="meta-list">
+                        <li><span class="dot" style="background-color: #FF5F5F;"></span>Costa Rica</li>
+                        <li><span class="dot" style="background-color: #FFFFFF;"></span>Myrmecology</li>
+                    </ul>
+                </div>
+                <div class="project-title">Sweet Teeth and Sour Outcomes: Traniello Lab Research</div>
+                <div class="awards-container">
+                    <div class="award-chip">
+                        <i class="fa-solid fa-award"></i> Tufts 2025 Student Research Grant
+                    </div>
+                    <div class="award-chip">
+                        <i class="fa-solid fa-file-pen"></i> Manuscript in Prep
+                    </div>
+                </div>
+            </a>
+
+            <!-- Project 4 -->
+            <a href="https://www.bu.edu/biology/2025/05/08/isabella-arabia-showcases-an-ant-inspired-art-installation-for-her-senior-thesis-exhibition/" target="_blank" class="project-item" data-category="art">
+                <div class="image-container">
+                    <img src="/img/projects/colony_X.JPG" alt="Oil on Canvas Installation">
+                    <div class="read-more-overlay">
+                        <span class="read-more-text">Read More</span>
+                    </div>
+                </div>
+                <div class="meta-row">
+                    <span class="meta-label">Sep 2024 - May 2025</span>
+                    <ul class="meta-list">
+                        <li><span class="dot" style="background-color: #A364FF;"></span>Gallery Installation</li>
+                        <li><span class="dot" style="background-color: #FF9F1C;"></span>Multimedia</li>
+                    </ul>
+                </div>
+                <div class="project-title">Colony Subject X: Senior Thesis Project</div>
+                <div class="awards-container">
+                    <div class="award-chip">
+                        <i class="fa-solid fa-palette"></i> SMFA 2025 Materials Funding Award
+                    </div>
+                </div>
+            </a>
+
+            <!-- Project 5 -->
+            <a href="https://docs.google.com/presentation/d/1PgoZ1RRBqFurBP_1nt2IzZxy5xcsC1MO/edit?usp=sharing&ouid=116999641964113394053&rtpof=true&sd=true" target="_blank" class="project-item" data-category="fieldwork biology research">
+                <div class="image-container">
+                    <img src="/img/projects/nhec.jpg" alt="GIS Mapping">
+                    <div class="read-more-overlay">
+                        <span class="read-more-text">Read More</span>
+                    </div>
+                </div>
+                <div class="meta-row">
+                    <span class="meta-label">Jan 2024</span>
+                    <ul class="meta-list">
+                        <li><span class="dot" style="background-color: #2EC4B6;"></span>GIS</li>
+                        <li><span class="dot" style="background-color: #CBF3F0;"></span>Fieldwork</li>
+                    </ul>
+                </div>
+                <div class="project-title">NHEC: Discovering GIS</div>
+                <div class="awards-container">
+                    <div class="award-chip">
+                        <i class="fa-solid fa-graduation-cap"></i> 9th Annual STEM Institute Scholar
+                    </div>
+                </div>
+            </a>
+
+            <!-- Project 6 -->
+            <a href="https://www.wiredamazon.com/" target="_blank" class="project-item" data-category="fieldwork biology research">
+                <div class="image-container">
+                    <img src="img/projects/wired_amazon.jpg" alt="Amazon Rainforest Conservation">
+                    <div class="read-more-overlay">
+                        <span class="read-more-text">Read More</span>
+                    </div>
+                </div>
+                <div class="meta-row">
+                    <span class="meta-label">May 2022 - July 2023</span>
+                    <ul class="meta-list">
+                        <li><span class="dot" style="background-color: #4CC9F0;"></span>Conservation</li>
+                        <li><span class="dot" style="background-color: #3A0CA3;"></span>Peru</li>
+                    </ul>
+                </div>
+                <div class="project-title">Wired Amazon: Conserving the Peruvian Amazon Rainforest</div>
+                <div class="awards-container">
+                    <div class="award-chip">
+                        <i class="fa-solid fa-circle-play"></i> 114k+ View Documentary
+                    </div>
+                    <div class="award-chip">
+                        <i class="fa-solid fa-camera"></i> Tufts 2024 ENVS Photo Contest Winner
+                    </div>
+                    <div class="award-chip">
+                        <i class="fa-solid fa-image"></i> Tufts 2025 ENVS Photo Contest Top 10
+                    </div>
+                </div>
+            </a>
+
+        </div>
+    </div>
+</section>
+
+<!-- Filter Logic Script -->
 <script>
-  let words = ["Video", "Photo", "Painting", "Design", "Drawing"];
-  let rows = 5;
-  let wordSize = 120;
-  let scrollSpeed = 1;
-  let wordArrays = [];
-  let offsets = [];
-  let images = {};
-  let hoveredWord = null;
-  let pausedRow = null;
+    document.addEventListener('DOMContentLoaded', () => {
+        const chips = document.querySelectorAll('.filter-chip');
+        const items = document.querySelectorAll('.project-item');
 
-  let wordLinks = {
-    "VIDEO": "video.html",
-    "PHOTO": "photo.html",
-    "PAINTING": "painting.html",
-    "DESIGN": "design.html",
-    "DRAWING": "drawing.html"
-  };
+        chips.forEach(chip => {
+            chip.addEventListener('click', () => {
+                chips.forEach(c => c.classList.remove('active'));
+                chip.classList.add('active');
 
-  function preload() {
-    for (let word of words) {
-      let upperWord = word.toUpperCase();
-      images[upperWord] = loadImage(`img/${word.toLowerCase()}.png`);
-    }
-  }
+                const category = chip.getAttribute('data-filter');
 
-  function setup() {
-    let canvas = createCanvas(windowWidth, windowHeight * 0.85);
-    canvas.parent('sketchContainer1');
-    textFont('Montserrat');
-    textSize(wordSize);
-    textStyle(BOLD);
-
-    for (let i = 0; i < rows; i++) {
-      wordArrays[i] = [];
-      offsets[i] = 0;
-
-      let shuffledWords = shuffle([...words]);
-      let totalLength = 0;
-
-      while (totalLength < windowWidth * 2) {
-        for (let word of shuffledWords) {
-          let upperWord = word.toUpperCase();
-          totalLength += textWidth(upperWord) + 20;
-
-          if (totalLength >= windowWidth * 2) {
-            break;
-          }
-
-          let rowStartColor = (i % 2 === 0) ? "#fff" : "#8B7BE1";
-          let alternateColor = (i % 2 === 0) ? "#8B7BE1" : "#fff";
-
-          let color = (wordArrays[i].length % 2 === 0) ? rowStartColor : alternateColor;
-          wordArrays[i].push({ word: upperWord, color: color });
-        }
-
-        shuffledWords = shuffle([...words]);
-      }
-    }
-  }
-
-  function draw() {
-    background('#090E1E');
-    let cursorOverText = false;
-
-    for (let i = 0; i < rows; i++) {
-      let xOffset = offsets[i];
-      let yOffset = wordSize * (i + 1) * 1.2;
-
-      for (let j = 0; j < wordArrays[i].length; j++) {
-        let wordObj = wordArrays[i][j];
-        let wordWidth = textWidth(wordObj.word);
-        let textColor = wordObj.color;
-
-        if (mouseX > xOffset && mouseX < xOffset + wordWidth && mouseY > yOffset - wordSize && mouseY < yOffset) {
-          fill(color(textColor).levels[0], color(textColor).levels[1], color(textColor).levels[2], 204);
-          cursorOverText = true;
-          hoveredWord = wordObj.word;
-          pausedRow = i;
-        } else {
-          fill(textColor);
-        }
-
-        text(wordObj.word, xOffset, yOffset);
-
-        xOffset += wordWidth + 20;
-      }
-
-      if (pausedRow !== i) {
-        offsets[i] -= scrollSpeed;
-      }
-
-      if (offsets[i] <= -textWidth(wordArrays[i][0].word) - 20) {
-        offsets[i] += textWidth(wordArrays[i][0].word) + 20;
-        wordArrays[i].push(wordArrays[i].shift());
-      }
-    }
-
-    // Draw image near cursor
-    if (cursorOverText && hoveredWord) {
-      cursor('pointer');
-      let img = images[hoveredWord];
-      if (img) {
-        let maxImgSize = 350; // Adjust image size to be slightly smaller
-        let aspectRatio = img.width / img.height;
-        let displayWidth = aspectRatio >= 1 ? maxImgSize : maxImgSize * aspectRatio;
-        let displayHeight = aspectRatio >= 1 ? maxImgSize / aspectRatio : maxImgSize;
-        image(img, mouseX + -15, mouseY + -15, displayWidth, displayHeight); // Adjusted image size and position
-      }
-    } else {
-      cursor('default');
-      hoveredWord = null;
-      pausedRow = null;
-    }
-  }
-
-  function mousePressed() {
-    if (hoveredWord) {
-      window.location.href = wordLinks[hoveredWord];
-    }
-  }
-
-  function windowResized() {
-    resizeCanvas(windowWidth, windowHeight * 0.85);
-  }
+                items.forEach(item => {
+                    const itemCategories = item.getAttribute('data-category');
+                    if (category === 'all' || itemCategories.includes(category)) {
+                        item.classList.remove('hide');
+                    } else {
+                        item.classList.add('hide');
+                    }
+                });
+            });
+        });
+    });
 </script>
 
 </body>
 </html>
+

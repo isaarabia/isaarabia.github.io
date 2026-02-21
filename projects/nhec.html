@@ -1,0 +1,267 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Isa Arabia | NHEC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+
+    <!-- CSS Files (Adjusted for subdirectory) -->
+    <link href="../css/projects.css" rel="stylesheet">
+    <link href="../css/styles.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.3/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://kit.fontawesome.com/b5f3cf720c.js" crossorigin="anonymous"></script>
+
+    <style>
+        /* --- GLOBAL SETTINGS --- */
+        body {
+            background: #090E1E;
+            min-height: 100vh;
+            margin: 0;
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION ---
+           Identical to projects.html
+           Static positioning (default), flex, right aligned.
+        */
+        #navContainer {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: flex-end;
+            width: 100%;
+            background: transparent;
+        }
+
+        .nav-bar {
+            list-style: none;
+            display: flex;
+            gap: 30px;
+            align-items: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .nav-bar a {
+            text-decoration: none;
+            color: rgba(255, 255, 255, 0.6);
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: color 0.3s ease;
+            text-transform: lowercase;
+        }
+
+        .nav-bar a:hover {
+            color: white;
+        }
+
+        #specialText {
+            font-weight: 800;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            font-size: 1.1rem;
+            color: white;
+            margin-left: 10px;
+        }
+
+        /* --- MAIN LAYOUT WRAPPER ---
+           This container holds ALL content (Back link, Title, Images).
+           It ensures a perfect invisible "left line" alignment.
+        */
+        .main-wrapper {
+            max-width: 1000px; /* Controlled width for elegance */
+            margin: 0 auto;    /* Centered on screen */
+            padding: 60px 20px 100px 20px; /* Top padding separates it from Nav */
+        }
+
+        /* --- BACK LINK --- */
+        .back-nav-container {
+            margin-bottom: 40px;
+        }
+
+        .back-link {
+            text-decoration: none;
+            color: #2EC4B6; /* Accent color (Teal) */
+            font-size: 0.85rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            transition: transform 0.3s ease, color 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+
+        .back-link:hover {
+            color: white;
+            transform: translateX(-5px);
+        }
+
+        /* --- TYPOGRAPHY --- */
+        h1.project-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            line-height: 1.1;
+            color: white;
+        }
+
+        p.project-meta {
+            font-size: 1rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 60px;
+            font-weight: 400;
+            font-style: italic;
+            border-left: 2px solid #2EC4B6;
+            padding-left: 15px;
+        }
+
+        h2.section-header {
+            font-size: 1.75rem;
+            margin-bottom: 25px;
+            font-weight: 700;
+            color: white;
+        }
+
+        p.body-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.85);
+            margin-bottom: 30px;
+            font-weight: 300;
+        }
+
+        /* --- CONTENT BLOCKS --- */
+        .content-section {
+            margin-bottom: 100px; /* Consistent vertical spacing */
+        }
+
+        /* Used to limit text width so it doesn't stretch too wide to read */
+        .text-limit {
+            max-width: 700px;
+        }
+
+        /* --- IMAGES --- */
+        .img-fluid-width {
+            width: 100%;
+            height: auto;
+            border-radius: 4px;
+            display: block;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+        }
+
+        .caption {
+            margin-top: 15px;
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.4);
+            text-align: left;
+            font-style: italic;
+        }
+
+        /* --- GALLERY GRID --- */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .gallery-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- NAVIGATION (Identical to Projects Page) -->
+<div id="navContainer">
+    <nav>
+        <ul class="nav-bar">
+            <!-- Adjusted paths with ../ -->
+            <li><a href="../projects.html">projects</a></li>
+            <li><a href="../gallery.html" class="unselected">gallery</a></li>
+            <li><a href="../about.html" class="unselected">about</a></li>
+            <li><a href="../index.html#home" id="specialText">ISA</a></li>
+        </ul>
+    </nav>
+</div>
+
+<!-- MAIN LAYOUT WRAPPER -->
+<!-- Everything inside here shares the same left alignment margin -->
+<main class="main-wrapper">
+
+    <!-- Back Button -->
+    <div class="back-nav-container">
+        <a href="../projects.html" class="back-link">
+            <i class="fa-solid fa-arrow-left-long"></i> Back to Projects
+        </a>
+    </div>
+
+    <!-- Header Section -->
+    <header class="content-section">
+        <h1 class="project-title">NHEC: Discovering GIS</h1>
+        <p class="project-meta">January 2024 &nbsp;|&nbsp; Fieldwork & Data Analysis</p>
+
+        <!-- Main Hero Image -->
+        <img src="https://images.unsplash.com/photo-1524661135-423995f22d0b?q=80&w=2000&auto=format&fit=crop" class="img-fluid-width" alt="GIS Mapping Overview">
+    </header>
+
+    <!-- Overview Text (Aligned Left) -->
+    <section class="content-section">
+        <div class="text-limit">
+            <h2 class="section-header">The Overview</h2>
+            <p class="body-text">
+                At the National Hispanic Environmental Council (NHEC) 9th Annual California STEM Institute, I worked with a team of scholars to investigate the effects of drought and wildfire on the CSUCI Calleguas Creek riparian ecosystem using transect sampling and spatiotemporal analysis.
+            </p>
+            <p class="body-text">
+                The program lasted 6 days, providing me with an intensive, hands-on training in several ecological surveying techniques. It was such a fun project to work on and I was honored to present our findings to members of the USDA Forest Service!
+            </p>
+        </div>
+    </section>
+
+    <!-- Gallery Grid -->
+    <section class="content-section">
+        <div class="gallery-grid">
+            <div>
+                <img src="https://images.unsplash.com/photo-1581093458791-9f3c3900df4b?q=80&w=600&auto=format&fit=crop" class="img-fluid-width" alt="Field Detail">
+            </div>
+            <div>
+                <img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?q=80&w=600&auto=format&fit=crop" class="img-fluid-width" alt="Field Detail">
+            </div>
+            <div>
+                <img src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?q=80&w=600&auto=format&fit=crop" class="img-fluid-width" alt="Field Detail">
+            </div>
+        </div>
+        <div class="caption">Snapshots from the 6-day intensive program, including soil sampling and data collection.</div>
+    </section>
+
+    <!-- Methodology Text -->
+    <section class="content-section">
+        <div class="text-limit">
+            <h2 class="section-header">Methodology & Impact</h2>
+            <p class="body-text">
+                We utilized GIS mapping technologies to overlay historical fire data with current vegetation indices. This allowed us to visualize the recovery rate of the riparian ecosystem over the last decade. The process involved collecting soil samples, measuring canopy density, and cataloging biodiversity along designated transect lines.
+            </p>
+        </div>
+    </section>
+
+    <!-- Final Image -->
+    <section class="content-section">
+        <img src="https://images.unsplash.com/photo-1500964757637-c85e8a162699?q=80&w=2000&auto=format&fit=crop" class="img-fluid-width" alt="Final Presentation">
+        <div class="caption">Presenting findings to the USDA Forest Service at the end of the institute.</div>
+    </section>
+
+</main>
+
+</body>
+</html>
+
+
