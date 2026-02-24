@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Isa Arabia | Home</title>
+    <title>Isa Arabia | About</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,94 +21,200 @@
     <meta name="msapplication-TileColor" content="#da532c">
     <meta name="theme-color" content="#ffffff">
 
-</head>
-<style>
-    .about-portrait {
-        width: 90%;
-        height: auto;
-    }
-    .about-page {
-        margin-top: 120px;
-    }
-    .about-header {
-        font-family: Montserrat;
-        color: #F6F2E0;
-        font-weight: 800;
-        font-size: 48pt;
-        margin-bottom: 20px;
-    }
-    .about-text {
-        color: #EBE5ED; font-size: 13pt; font-weight: 400;
-    }
-    .about-container {
-        width: 80%;
-        margin-top: 140px;
-    }
-    .bolded {
-        font-weight: 700;
-        transition: 0.3s;
-        color: #fff;
-    }
-    .bolded:hover > a {
-        color: #8C7BE2;
-        border-bottom: 1px solid #8C7BE2;
-        cursor: pointer;
-    }
-    .bolded > a {
-        text-decoration: none;
-        border-bottom: 1px solid white;
-        color: #fff;
-        transition: 0.3s;
-    }
-    @media (max-width: 1300px) {
-        .about-container {
-            width: 95%;
+    <style>
+        body {
+            overflow: hidden;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            background: #090E1E !important;
         }
-    }
-    @media (max-width: 992px) {
-        .about-portrait-column {
-            display: none;
+
+        /* Full height layout wrappers */
+        .about-page-container {
+            height: 100vh;
+            width: 100vw;
+            overflow: hidden;
         }
-        .diva {
+
+        .about-portrait {
             width: 100%;
+            height: 100vh;
+            object-fit: cover;
+            object-position: top center;
+            display: block;
+            margin: 0;
         }
-        .about-container {
-            width: 85%;
+
+        /*
+        ====================================================
+           "ABOUT ME" Header (Mapped from Home Page)
+        ====================================================
+        */
+        .headerText {
+            position: absolute;
+            top: 20px;
+            left: 5vw; /* Aligned to overlap the 41.6% image column edge */
+            font-family: "Arial Black", sans-serif;
+            font-weight: 800;
+            font-size: 12vw;
+            color: #fff;
+            mix-blend-mode: difference;
+            z-index: 2;
+            margin: 0;
+            text-transform: uppercase;
+            pointer-events: none; /* Allows user to click links beneath text */
+            line-height: 1;
         }
-    }
-</style>
+
+        /* Adjust right column to center text vertically */
+        .diva {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding-left: 6vw;
+            padding-right: 8vw;
+            height: 100vh;
+            padding-top: 150px;
+        }
+
+        .about-text {
+            color: #EBE5ED;
+            font-size: 16pt;
+            font-weight: 400;
+            line-height: 1.6;
+            margin-bottom: 1.2rem;
+        }
+
+        .bolded {
+            font-weight: 700;
+            transition: 0.3s;
+            color: #fff;
+        }
+
+        .bolded:hover > a {
+            color: #8C7BE2;
+            border-bottom: 1px solid #8C7BE2;
+            cursor: pointer;
+        }
+
+        .bolded > a {
+            text-decoration: none;
+            border-bottom: 1px solid white;
+            color: #fff;
+            transition: 0.3s;
+        }
+
+        /* Ensure nav bar sits on top smoothly */
+        #leftPanel {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            z-index: 20;
+            pointer-events: none; /* Let clicks fall through non-nav parts */
+        }
+
+        #navContainer {
+            pointer-events: auto; /* Ensure navigation remains clickable */
+        }
+
+        .small-portrait {
+            display: none;
+            width: 100vw;
+            height: auto;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 1300px) {
+            .headerText {
+                font-size: 12vw;
+                left: 5vw;
+                line-height: 1;
+            }
+        }
+
+        @media (max-width: 995px) {
+            .about-portrait-column {
+                display: none;
+            }
+
+            /* Override Bootstrap's 100vh force so text and image flow naturally */
+            .row.h-100 {
+                height: auto !important;
+            }
+
+            .diva {
+                width: 100%;
+                padding: 0 10vw 40px 10vw; /* Added padding-bottom for spacing */
+                display: block;
+                margin-top: 160px;
+                height: auto !important; /* Allow the div to grow with the text */
+            }
+
+            .headerText {
+                display: none;
+            }
+
+            .small-portrait {
+                display: block;
+                position: relative;
+                margin-top: 0; /* Removed negative margin causing overlaps */
+            }
+
+            .about-page-container {
+                overflow-y: auto; /* Switched to auto so it scrolls correctly */
+            }
+
+            #navContainer {
+                position: relative;
+            }
+        }
+
+        @media (max-width: 1150px) {
+            .about-text {
+                font-size: 15pt;
+            }
+        }
+    </style>
+</head>
 <body>
+
+<!-- Replaced standard container to drop standard padding/margins for edge-to-edge alignment -->
+<div class="container-fluid p-0 m-0 about-page-container position-relative">
+
+    <!-- Moved the Nav into the scrolling container so it scrolls out of view naturally on small screens -->
     <div id="leftPanel">
         <div id="navContainer">
             <nav>
                 <ul class="nav-bar">
                     <li><a href="projects.html" class="unselected">projects</a></li>
-                    <!--            <li><a href="#about" class="unselected">projects</a></li>-->
                     <li><a href="gallery.html" class="unselected">gallery</a></li>
                     <li><a href="about.html">about</a></li>
-                    <!--            <li><a href="https://www.linkedin.com/in/isabellaarabia/" target="_blank" class="unselected">about</a></li>-->
                     <li><a href="index.html#home" id="specialText">ISA</a></li>
                 </ul>
             </nav>
         </div>
     </div>
 
-    <div class="container about-page">
-        <div class="container about-container">
-            <div class="row">
-                <div class="col-5 about-portrait-column">
-                    <img alt="portrait 2" src="img/portrait_2.jpeg" class="about-portrait">
-                </div>
-                <div class="col-7 diva align-self-center">
-                    <h1 class="about-header">About Me</h1>
-                    <p class="about-text">I am currently a master’s student at <span class="bolded"><a href="https://www.tufts.edu/" target="_blank">Tufts University</a></span>, and I will be applying to <span class="bolded">behavioral ecology</span> and <span class="bolded">biological anthropology</span> Ph.D. programs this cycle. I am passionate about <span class="bolded">tropical fieldwork</span>, <span class="bolded">long-term data analytics</span>, and using <span class="bolded">visual art</span> mediums to disseminate scientific research and broaden public engagement in <span class="bolded">conservation</span>.</p>
-                    <p class="about-text">My current research includes an independent lab project investigating age-related changes in male chimpanzee reproductive strategy with <span class="bolded"><a href="https://as.tufts.edu/anthropology/people/faculty/zarin-machanda" target="_blank">Dr. Zarin P. Machanda</a></span>, as well as a separate field project exploring Costa Rican leafcutter ant foraging ecology and intraspecific competition with <span class="bolded"><a href="https://www.bu.edu/biology/people/profiles/james-f-a-traniello/" target="_blank">Dr. James F.A. Traniello</a></span>. </p>
-                    <p class="about-text">Feel free to <span class="bolded"><a href="https://www.linkedin.com/in/isabellaarabia" target="_blank">contact me</a></span> if you’re in the Boston area or if you just want to talk about science!</p>
-                </div>
-            </div>
+    <h1 class="headerText">About <br>Me</h1>
+
+    <div class="row g-0 h-100">
+        <div class="col-5 h-100 about-portrait-column">
+            <img alt="portrait 2" src="img/portrait_2.jpeg" class="about-portrait">
         </div>
 
+        <div class="col-7 h-100 diva">
+            <p class="about-text">I am currently a master’s student at <span class="bolded"><a href="https://www.tufts.edu/" target="_blank">Tufts University</a></span> interested in <span class="bolded">primate behavioral ecology</span>. I am passionate about <span class="bolded">tropical fieldwork</span>, <span class="bolded">long-term data analytics</span>, and using <span class="bolded">visual art</span> mediums to disseminate scientific research and broaden public engagement in <span class="bolded">conservation</span>.</p>
+            <p class="about-text">My current research includes an independent lab project investigating age-related changes in male chimpanzee reproductive strategy with <span class="bolded"><a href="https://as.tufts.edu/anthropology/people/faculty/zarin-machanda" target="_blank">Dr. Zarin P. Machanda</a></span>, and a field project exploring Costa Rican leafcutter ant foraging ecology and intraspecific competition with <span class="bolded"><a href="https://www.bu.edu/biology/people/profiles/james-f-a-traniello/" target="_blank">Dr. James F.A. Traniello</a></span>. </p>
+            <p class="about-text">Feel free to <span class="bolded"><a href="https://www.linkedin.com/in/isabellaarabia" target="_blank">contact me</a></span> if you’re in the Boston area or if you just want to talk about science or art!</p>
+        </div>
+        <img class="small-portrait" src="img/portrait_3.jpeg">
     </div>
+</div>
 
 </body>
 </html>
+
