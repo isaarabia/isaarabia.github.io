@@ -199,14 +199,14 @@
         #bouncingArrow {
             display: inline-block;
             vertical-align: middle;
-            margin-left: 4vw;
-            margin-bottom: 2vw; /* Helps with vertical centering */
+            margin-left: 3.75vw;
+            margin-bottom: -2vw; /* Helps with vertical centering */
             cursor: pointer;
             animation: bounce 2.5s infinite;
-            width: 2vw;
-            height: 2vw;
-            border-bottom: 0.65vw solid #fff;
-            border-right: 0.65vw solid #fff;
+            width: 3vw;
+            height: 3vw;
+            border-bottom: 1vw solid #fff;
+            border-right: 1vw solid #fff;
             transform: rotate(45deg);
             opacity: 1;
             transition: opacity 0.5s ease-out;
@@ -219,10 +219,10 @@
             content: '';
             position: absolute;
             /* These negative values expand the pseudo-element outwards */
-            top: -20px;
-            left: -20px;
-            right: -20px;
-            bottom: -20px;
+            top: -40px;
+            left: -40px;
+            right: -40px;
+            bottom: -40px;
         }
 
         body.animation-triggered #bouncingArrow {
