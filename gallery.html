@@ -1,5 +1,4 @@
-<html lang="en">
-<head>
+<html lang="en"> <head>
     <meta charset="UTF-8">
     <title>Isa Arabia | Painting</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -257,7 +256,7 @@
 <!-- Loader Element (p5.js automatically displays this during preload and hides it on setup) -->
 <div id="p5_loading">
     <div class="loader-spinner"></div>
-    <div class="loader-text">Loading Gallery...</div>
+    <div class="loader-text"></div>
 </div>
 
 <div id="sketchContainer2"></div>
@@ -299,6 +298,11 @@
     function setup() {
         let c = createCanvas(100, 100);
         c.parent('sketchContainer2');
+
+        // Wrap images to retain original ID, then shuffle to randomize grid order
+        let wrappedImages = images.map((img, index) => ({ img: img, id: index + 1 }));
+        images = shuffle(wrappedImages);
+
         calculateLayout();
     }
 
@@ -313,7 +317,8 @@
         columns = [[], [], []];
         columnHeights = [0, 0, 0];
 
-        images.forEach((img, index) => {
+        images.forEach((itemObj) => {
+            let img = itemObj.img;
             let aspectRatio = img.height / img.width;
             let displayHeight = imgWidth * aspectRatio;
 
@@ -321,7 +326,7 @@
 
             columns[shortestColumnIndex].push({
                 img,
-                originalIndex: index + 1,
+                originalIndex: itemObj.id, // Retain true ID for correct max load & state tracking
                 w: imgWidth,
                 h: displayHeight
             });
@@ -540,9 +545,31 @@
         document.getElementById('popupOverlay').style.display = 'none';
     }
 
+    function navigatePopup(direction) {
+        // Find current image position in the active randomized grid array
+        let currentIndex = images.findIndex(data => data.id === currentPopupIndex);
+        if (currentIndex === -1) return;
+
+        let nextIndex = currentIndex + direction;
+
+        // Loop back if extending past boundaries
+        if (nextIndex < 0) nextIndex = images.length - 1;
+        if (nextIndex >= images.length) nextIndex = 0;
+
+        openPopup(images[nextIndex].id);
+    }
+
     document.addEventListener('keydown', function(event) {
-        if (popupOpen && (event.key === 'Enter' || event.key === 'Escape')) {
-            closePopup(event);
+        if (popupOpen) {
+            if (event.key === 'Enter' || event.key === 'Escape') {
+                closePopup(event);
+            } else if (event.key === 'ArrowLeft') {
+                event.preventDefault(); // Prevent accidental page scroll
+                navigatePopup(-1);
+            } else if (event.key === 'ArrowRight') {
+                event.preventDefault(); // Prevent accidental page scroll
+                navigatePopup(1);
+            }
         }
     });
 </script>
